@@ -5,6 +5,10 @@ import { User } from "./entity/User";
 const app = express();
 app.use(express.json());
 
+const authRouter = require("./routes/authRoute");
+
+app.use("/", authRouter);
+
 // 데이터베이스 연결 초기화
 AppDataSource.initialize()
   .then(() => {
