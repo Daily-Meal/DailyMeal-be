@@ -10,18 +10,11 @@ import {
 export async function join(req: Request, res: Response) {
   const { email, nickname, password } = req.body;
   try {
-    // 사용자 가입
     const user = await joinUser(email, nickname, password);
 
-    // 가입 후 자동 로그인하여 토큰 생성
-    const { accessToken, refreshToken } = await loginUser(email, password);
-
-    // 성공 응답 반환
     res.status(StatusCodes.CREATED).json({
       message: "User registered successfully",
       user,
-      accessToken,
-      refreshToken,
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
