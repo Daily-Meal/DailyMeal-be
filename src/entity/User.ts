@@ -1,6 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  BeforeInsert,
+  BeforeUpdate,
+} from "typeorm";
+import * as bcrypt from "bcryptjs";
 import { Board } from "./Board";
 import { Like } from "./Like";
+import { Token } from "./Token";
 
 @Entity("users")
 export class User {
@@ -21,4 +30,19 @@ export class User {
 
   @OneToMany(() => Like, like => like.user)
   likes: Like[];
+
+  @OneToMany(() => Token, token => token.user)
+  tokens: Token[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    if (this.password) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
+  }
+
+  async comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
 }
