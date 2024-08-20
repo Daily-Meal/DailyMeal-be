@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const ACCESS_TOKEN_SECRET =
   process.env.ACCESS_TOKEN_SECRET || "your_access_token_secret";
@@ -34,4 +34,28 @@ export function verifyRefreshToken(token: string) {
   } catch (error) {
     throw new Error("Invalid refresh token");
   }
+}
+
+export function extractUserIdFromPayload(payload: string | JwtPayload): number {
+  if (typeof payload === "string") {
+    throw new Error(
+      "Invalid payload: expected an object but received a string.",
+    );
+  }
+
+  const userId = payload.userId;
+  if (userId == null) {
+    throw new Error("User ID not found in the payload.");
+  }
+
+  const parsedUserId = parseAndValidateUserId(userId);
+  return parsedUserId;
+}
+
+function parseAndValidateUserId(userId: any): number {
+  const parsedUserId = Number(userId);
+  if (isNaN(parsedUserId)) {
+    throw new Error("User ID is not a valid number.");
+  }
+  return parsedUserId;
 }

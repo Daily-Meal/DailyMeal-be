@@ -7,10 +7,11 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "strict": true /* Enable all strict type-checking options. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
-
+    "typeRoots": ["./node_modules/@types", "./types"],
     "strictPropertyInitialization": false /* 비활성화 시 프로퍼티 초기화를 강제하지 않음 */,
     "experimentalDecorators": true /* 데코레이터를 사용할 수 있도록 설정 */,
     "emitDecoratorMetadata": true /* 데코레이터 메타데이터를 생성하도록 설정 */
   },
-  "include": ["src/**/*"] /* Include all files in the src directory */
+
+  "include": ["src/**/*", "types/**/*.d.ts"]  /* Include all files in the src directory */
 }
