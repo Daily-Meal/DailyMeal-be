@@ -18,7 +18,7 @@ export class Board {
   board_id: number;
 
   @Column({ type: "varchar", length: 255, nullable: true })
-  image: string;
+  image: string | null;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
