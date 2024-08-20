@@ -43,11 +43,18 @@ export async function updateBoardController(req: Request, res: Response) {
     }
 
     const { category, mealType, image } = req.body;
+
     const { boardId } = req.params;
+    const parsedBoardId = parseInt(boardId);
+    if (isNaN(parsedBoardId)) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Invalid board ID." });
+    }
 
     const updatedBoard = await updateBoard(
       userId,
-      parseInt(boardId),
+      parsedBoardId,
       category,
       mealType,
       image,
@@ -73,8 +80,14 @@ export async function deleteBoardController(req: Request, res: Response) {
     }
 
     const { boardId } = req.params;
+    const parsedBoardId = parseInt(boardId);
+    if (isNaN(parsedBoardId)) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Invalid board ID." });
+    }
 
-    const result = await deleteBoard(userId, parseInt(boardId));
+    const result = await deleteBoard(userId, parsedBoardId);
     return res.status(StatusCodes.OK).json(result);
   } catch (error) {
     const errorMessage =
