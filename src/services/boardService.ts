@@ -32,7 +32,9 @@ export async function updateBoard(
   image?: string,
 ) {
   try {
-    const board = await boardRepository.findOne({ where: { board_id: boardId, user_id: userId } });
+    const board = await boardRepository.findOne({
+      where: { board_id: boardId, user_id: userId },
+    });
     if (!board) throw new Error("Board not found or access denied");
 
     if (category) board.category = category;
@@ -51,3 +53,21 @@ export async function updateBoard(
   }
 }
 
+export async function deleteBoard(userId: number, boardId: number) {
+  try {
+    const board = await boardRepository.findOne({
+      where: { board_id: boardId, user_id: userId },
+    });
+    if (!board) throw new Error("Board not found or access denied");
+
+    await boardRepository.remove(board);
+
+    return { message: "Board successfully deleted" };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to delete board: ${error.message}`);
+    } else {
+      throw new Error("Failed to delete board due to an unknown error");
+    }
+  }
+}
