@@ -23,3 +23,31 @@ export async function createBoard(
 
   return boardRepository.save(board);
 }
+
+export async function updateBoard(
+  userId: number,
+  boardId: number,
+  category?: string,
+  mealType?: string,
+  image?: string,
+) {
+  try {
+    const board = await boardRepository.findOne({ where: { board_id: boardId, user_id: userId } });
+    if (!board) throw new Error("Board not found or access denied");
+
+    if (category) board.category = category;
+    if (mealType) board.meal_type = mealType;
+    if (image) board.image = image;
+
+    const updatedBoard = await boardRepository.save(board);
+
+    return updatedBoard;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to update board: ${error.message}`);
+    } else {
+      throw new Error("Failed to update board due to an unknown error");
+    }
+  }
+}
+
