@@ -111,3 +111,31 @@ export async function deleteBoard(userId: number, boardId: number) {
     },
   );
 }
+
+export async function getBoardsByUser(
+  userId: number,
+  category: string | null,
+  limit: number,
+  offset: number,
+) {
+  const boards = await boardRepository
+    .createQueryBuilder("board")
+    .leftJoin("board.user", "user")
+    .addSelect(["user.user_id", "user.nickname"])
+    .leftJoinAndSelect("board.meals", "meals")
+    .leftJoinAndSelect("board.tags", "tags")
+    .where("board.user_id = :userId", { userId })
+    .andWhere(category ? "board.category = :category" : "1=1", { category })
+    .orderBy("board.created_at", "DESC")
+    .skip(offset)
+    .take(limit)
+    .getMany();
+
+  const total = await boardRepository
+    .createQueryBuilder("board")
+    .where("board.user_id = :userId", { userId })
+    .andWhere(category ? "board.category = :category" : "1=1", { category })
+    .getCount();
+
+  return { boards, total };
+}
