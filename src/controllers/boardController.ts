@@ -150,16 +150,10 @@ export async function getBoardsByUserController(req: Request, res: Response) {
       });
     }
 
-    const { category } = req.query;
     const limit = parseInt(req.query.limit as string, 10) || DEFAULT_LIMIT;
     const offset = parseInt(req.query.offset as string, 10) || DEFAULT_OFFSET;
 
-    const { boards, total } = await getBoardsByUser(
-      userId,
-      category as string,
-      limit,
-      offset,
-    );
+    const { boards, total } = await getBoardsByUser(userId, limit, offset);
 
     return res.status(StatusCodes.OK).json({
       isSuccess: true,
