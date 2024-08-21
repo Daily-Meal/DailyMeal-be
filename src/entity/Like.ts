@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { User } from "./User";
 import { Board } from "./Board";
 
@@ -14,8 +20,10 @@ export class Like {
   user_id: number;
 
   @ManyToOne(() => Board, board => board.likes)
+  @JoinColumn({ name: "board_id" })
   board: Board;
 
   @ManyToOne(() => User, user => user.likes)
+  @JoinColumn({ name: "user_id" })
   user: User;
 }
