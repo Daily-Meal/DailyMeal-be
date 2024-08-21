@@ -7,10 +7,12 @@ app.use(express.json());
 const authRouter = require("./routes/authRoute");
 const checkRouter = require("./routes/checkRoute");
 const boardRouter = require("./routes/boardRoute");
+const myPageRouter = require("./routes/mypageRoute");
 
 app.use("/", authRouter);
 app.use("/check", checkRouter);
 app.use("/boards", boardRouter);
+app.use("/mypage", myPageRouter);
 
 // 데이터베이스 연결 초기화
 AppDataSource.initialize()
