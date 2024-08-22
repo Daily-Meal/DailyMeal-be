@@ -4,10 +4,12 @@ import {
   deleteBoardController,
   getBoardsByUserController,
   getBoardsController,
-  isLikedController,
-  toggleLikeController,
   updateBoardController,
 } from "../controllers/boardController";
+import {
+  isLikedController,
+  toggleLikeController,
+} from "../controllers/likeController";
 import { authenticateToken } from "../middlewares/authenticateToken";
 
 const router = Router();
@@ -18,6 +20,6 @@ router.put("/:boardId", authenticateToken, updateBoardController);
 router.delete("/:boardId", authenticateToken, deleteBoardController);
 router.get("/users/:userId", getBoardsByUserController);
 router.post("/:boardId/like", authenticateToken, toggleLikeController);
-router.get("/:boardId/isLiked", authenticateToken, isLikedController);
+router.get("/:boardId/status", authenticateToken, isLikedController);
 
 module.exports = router;
