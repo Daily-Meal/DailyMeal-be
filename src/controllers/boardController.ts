@@ -7,6 +7,7 @@ import {
   getBoardsByUser,
   updateBoard,
 } from "../services/boardService";
+import { isLiked, toggleLike } from "../services/likeService";
 
 const DEFAULT_LIMIT = 8;
 const DEFAULT_OFFSET = 0;
@@ -169,5 +170,45 @@ export async function getBoardsByUserController(req: Request, res: Response) {
       isSuccess: false,
       message: "Failed to fetch boards by user",
     });
+  }
+}
+
+export async function toggleLikeController(req: Request, res: Response) {
+  try {
+    const userId = req.userId;
+    const { boardId } = req.params;
+
+    if (!userId) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Unauthorized" });
+    }
+
+    const result = await toggleLike(userId, parseInt(boardId));
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "An error occurred" });
+  }
+}
+
+export async function isLikedController(req: Request, res: Response) {
+  try {
+    const userId = req.userId;
+    const { boardId } = req.params;
+
+    if (!userId) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Unauthorized" });
+    }
+
+    const liked = await isLiked(userId, parseInt(boardId));
+    return res.status(StatusCodes.OK).json({ isLiked: liked });
+  } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "An error occurred" });
   }
 }
