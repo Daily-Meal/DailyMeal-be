@@ -20,6 +20,6 @@ router.put("/:boardId", authenticateToken, updateBoardController);
 router.delete("/:boardId", authenticateToken, deleteBoardController);
 router.get("/users/:userId", getBoardsByUserController);
 router.post("/:boardId/like", authenticateToken, toggleLikeController);
-router.get("/:boardId/status", authenticateToken, isLikedController);
+router.get("/:boardId/like/status", authenticateToken, isLikedController);
 
 module.exports = router;
