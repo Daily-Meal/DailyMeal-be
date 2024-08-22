@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from "typeorm";
 import { User } from "./User";
 import { Like } from "./Like";
@@ -40,6 +41,7 @@ export class Board {
   meal_type: string;
 
   @ManyToOne(() => User, user => user.boards)
+  @JoinColumn({ name: "user_id" })
   user: User;
 
   @OneToMany(() => Like, like => like.board)
