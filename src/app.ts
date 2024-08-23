@@ -4,6 +4,14 @@ import { AppDataSource } from "./config/datasource";
 const app = express();
 app.use(express.json());
 
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+
 const authRouter = require("./routes/authRoute");
 const checkRouter = require("./routes/checkRoute");
 const boardRouter = require("./routes/boardRoute");
