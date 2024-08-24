@@ -30,8 +30,13 @@ export async function join(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   try {
-    const { accessToken, refreshToken } = await loginUser(email, password);
-    return res.status(StatusCodes.OK).json({ accessToken, refreshToken });
+    const { accessToken, refreshToken, nickname } = await loginUser(
+      email,
+      password,
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json({ accessToken, refreshToken, email, nickname });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return res
