@@ -36,8 +36,18 @@ DailyMeal-be/
 │   ├── routes/            # 라우트 테스트
 │   └── app.test.ts        # 애플리케이션 전체 테스트
 │
-├── tsconfig.json          # TypeScript 구성 파일
+├── types/express/         # Express 관련 타입 정의 (예: Request, Response 커스텀 타입)
+│
+├── .github/               # GitHub 설정 파일 (예: 워크플로우)
+├── .gitignore             # Git에 포함하지 않을 파일 목록
+├── .prettierrc            # Prettier 코드 스타일 설정 파일
+├── README.md              # 프로젝트 설명 및 문서화 파일
+├── eslint.config.js       # ESLint 설정 파일
 ├── jest.config.js         # Jest 테스트 구성 파일
 ├── ormconfig.json         # TypeORM 구성 파일
-└── package.json           # 프로젝트 메타데이터 및 종속성
+├── package-lock.json      # NPM 패키지 잠금 파일
+├── package.json           # 프로젝트 메타데이터 및 종속성
+├── tsconfig.json          # TypeScript 구성 파일
+└── tsconfig.node.json     # Node.js용 TypeScript 구성 파일
+
 
