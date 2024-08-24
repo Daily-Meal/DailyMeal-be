@@ -18,7 +18,7 @@ export class Board {
   @PrimaryGeneratedColumn({ type: "bigint" })
   board_id: number;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
+  @Column({ type: "longtext", nullable: true })
   image: string | null;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })

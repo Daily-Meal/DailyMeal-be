@@ -22,7 +22,8 @@ export function generateRefreshToken(userId: number) {
 
 export function verifyAccessToken(token: string) {
   try {
-    return jwt.verify(token, ACCESS_TOKEN_SECRET);
+    const actualToken = token.startsWith("Bearer ") ? token.slice(7) : token; // 수정
+    return jwt.verify(actualToken, ACCESS_TOKEN_SECRET); // 수정
   } catch (error) {
     throw new Error("Invalid access token");
   }

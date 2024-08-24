@@ -46,7 +46,11 @@ export async function loginUser(email: string, password: string) {
 
   await tokenRepository.save(token);
 
-  return { accessToken, refreshToken };
+  return {
+    accessToken,
+    refreshToken,
+    nickname: user.nickname,
+  };
 }
 
 export async function logoutUser(userId: number) {
