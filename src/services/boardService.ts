@@ -3,6 +3,7 @@ import { Board } from "../entity/Board";
 import { Meal } from "../entity/Meal";
 import { Tag } from "../entity/Tag";
 import { User } from "../entity/User";
+import { Like } from "../entity/Like";
 
 const boardRepository = AppDataSource.getRepository(Board);
 const userRepository = AppDataSource.getRepository(User);
@@ -104,6 +105,7 @@ export async function deleteBoard(userId: number, boardId: number) {
       await transactionalEntityManager.delete(Meal, { board_id: boardId });
 
       await transactionalEntityManager.delete(Tag, { board_id: boardId });
+      await transactionalEntityManager.delete(Like, { board_id: boardId });
 
       await transactionalEntityManager.remove(Board, board);
 
